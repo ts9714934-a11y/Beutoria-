@@ -1,0 +1,7 @@
+{
+  "name": "BEUTORIA - AI Beauty Analyzer",
+  "description": "An AI-powered beauty analysis tool that provides insights into 10 key beauty indexes by analyzing a user's photo.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
