@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import type { BeautyIndex } from '../../types';
@@ -24,7 +23,7 @@ const BeautyLineChart: React.FC<ChartProps> = ({ data }) => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="score" stroke="#82ca9d" activeDot={{ r: 8 }} />
+        <Line type="monotone" dataKey="score" stroke="#fb7185" activeDot={{ r: 8 }} />
       </LineChart>
     </ResponsiveContainer>
   );

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Treemap, ResponsiveContainer, Tooltip } from 'recharts';
 import type { BeautyIndex } from '../../types';
@@ -7,7 +6,7 @@ interface ChartProps {
   data: BeautyIndex[];
 }
 
-const COLORS = ['#8889DD', '#9597E4', '#8DC77B', '#A5D297', '#E2CF45', '#F8C12D'];
+const COLORS = ['#fb7185', '#fda4af', '#60a5fa', '#93c5fd', '#facc15', '#fde047'];
 
 const CustomizedContent: React.FC<any> = ({ root, depth, x, y, width, height, index, colors, name }) => {
   return (

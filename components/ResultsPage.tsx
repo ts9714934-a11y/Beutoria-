@@ -15,17 +15,15 @@ interface ResultsPageProps {
 }
 
 const ChartCard: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
-    <div className="bg-white p-6 rounded-2xl shadow-lg mb-8 border border-gray-100 animate-float-subtle">
-        <h3 className="text-2xl font-bold text-center mb-4">{title}</h3>
+    <div className="bg-white p-6 rounded-2xl shadow-xl shadow-rose-100/50 mb-8 border border-rose-50/50 animate-float-subtle">
+        <h3 className="text-xl font-bold text-center mb-4 text-slate-800">{title}</h3>
         <div className="w-full h-80">{children}</div>
     </div>
 );
 
-// Helper component to find and highlight keywords in a text
 const HighlightedText: React.FC<{ text: string; keywords: string[] }> = ({ text, keywords }) => {
     if (!keywords.length) return <>{text}</>;
 
-    // Escape special characters for regex and create a single pattern
     const regex = new RegExp(`(${keywords.map(k => k.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')).join('|')})`, 'gi');
     
     const parts = text.split(regex);
@@ -34,7 +32,7 @@ const HighlightedText: React.FC<{ text: string; keywords: string[] }> = ({ text,
         <>
             {parts.map((part, index) =>
                 keywords.some(k => k.toLowerCase() === part.toLowerCase()) ? (
-                    <strong key={index} className="font-bold text-black text-[1.1em]">
+                    <strong key={index} className="font-bold text-rose-500">
                         {part}
                     </strong>
                 ) : (
@@ -51,104 +49,103 @@ const ResultsPage: React.FC<ResultsPageProps> = ({ result, onBack }) => {
     const keywords = React.useMemo(() => beautyIndexes.map(bi => bi.name), [beautyIndexes]);
 
     return (
-        <div className="bg-white min-h-screen relative overflow-hidden">
-            <div className="fixed top-0 left-0 h-full w-1/2 pointer-events-none z-50 overflow-hidden">
-                {[...Array(20)].map((_, i) => (
+        <div className="bg-[#FFFBF7] min-h-screen relative overflow-x-hidden">
+             <div className="fixed top-0 left-0 w-full h-full pointer-events-none z-0">
+                {[...Array(15)].map((_, i) => (
                     <div
-                        key={`snow-${i}`}
-                        className="absolute text-white"
+                        key={`mote-${i}`}
+                        className="absolute bg-rose-200 rounded-full"
                         style={{
-                            top: '-10%',
+                            top: `${Math.random() * 100}%`,
                             left: `${Math.random() * 100}%`,
-                            fontSize: `${1 + Math.random()}rem`,
-                            opacity: Math.random() * 0.5 + 0.2,
-                            animation: `fall ${10 + Math.random() * 10}s linear infinite`,
+                            width: `${Math.random() * 3}px`,
+                            height: `${Math.random() * 3}px`,
+                            opacity: Math.random() * 0.5 + 0.1,
+                            animation: `drift ${10 + Math.random() * 20}s linear infinite`,
                             animationDelay: `${Math.random() * 10}s`,
                         }}
-                    >
-                        ❄️
-                    </div>
+                    ></div>
                 ))}
             </div>
 
             <style>{`
                 @keyframes float-subtle {
                     0% { transform: translateY(0px); }
-                    50% { transform: translateY(-4px); }
+                    50% { transform: translateY(-5px); }
                     100% { transform: translateY(0px); }
                 }
                 .animate-float-subtle {
                     animation: float-subtle 4s ease-in-out infinite;
                 }
-                @keyframes fall {
-                    0% { transform: translateY(0) rotate(0deg); }
-                    100% { transform: translateY(105vh) rotate(360deg); }
+                @keyframes drift {
+                    0% { transform: translate(0, 0) rotate(0deg); }
+                    100% { transform: translate(-100px, 150px) rotate(360deg); }
                 }
             `}</style>
-             <header className="sticky top-0 bg-white/80 backdrop-blur-sm z-50 p-4 border-b border-gray-200 flex justify-between items-center">
-                <h1 className="text-xl sm:text-2xl font-bold">Your Beutoria Analysis 🎀</h1>
-                <button onClick={onBack} className="px-6 py-2 bg-black text-white font-semibold rounded-full shadow-md hover:bg-gray-800 transition-colors">
+             <header className="sticky top-0 bg-white/70 backdrop-blur-md z-50 p-4 border-b border-rose-100/80 flex justify-between items-center">
+                <h1 className="text-xl sm:text-2xl font-bold text-slate-800">Your Beutoria Analysis 🎀</h1>
+                <button onClick={onBack} className="px-6 py-2 bg-slate-900 text-white font-semibold rounded-full shadow-md shadow-slate-900/20 hover:bg-slate-800 transition-colors">
                     Start Over
                 </button>
             </header>
             <main className="p-4 md:p-8 max-w-4xl mx-auto relative z-10">
                
                 <section className="mb-12">
-                    <ChartCard title="Beauty Index Overview 📊 (Bar Chart)">
+                    <ChartCard title="Beauty Index Overview 📊">
                         <BeautyBarChart data={beautyIndexes} />
                     </ChartCard>
-                    <ChartCard title="Index Trends 📈 (Line Chart)">
-                         <BeautyLineChart data={beautyIndexes} />
-                    </ChartCard>
-                    <ChartCard title="Score Distribution 🥧 (Pie Chart)">
-                        <BeautyPieChart data={beautyIndexes} />
-                    </ChartCard>
-                     <ChartCard title="Performance Analysis 🎯 (Radar Chart)">
+                     <ChartCard title="Performance Analysis 🎯">
                         <BeautyRadarChart data={beautyIndexes} />
                     </ChartCard>
-                    <ChartCard title="Overall Score Flow 🌊 (Area Chart)">
+                    <ChartCard title="Index Trends 📈">
+                         <BeautyLineChart data={beautyIndexes} />
+                    </ChartCard>
+                    <ChartCard title="Score Distribution 🥧">
+                        <BeautyPieChart data={beautyIndexes} />
+                    </ChartCard>
+                    <ChartCard title="Overall Score Flow 🌊">
                         <BeautyAreaChart data={beautyIndexes} />
                     </ChartCard>
-                     <ChartCard title="Index Correlation ✨ (Scatter Plot)">
+                     <ChartCard title="Index Correlation ✨">
                         <BeautyScatterPlot data={beautyIndexes} />
                     </ChartCard>
-                    <ChartCard title="Index Importance 🌳 (Tree Map)">
+                    <ChartCard title="Index Importance 🌳">
                         <BeautyTreeMap data={beautyIndexes} />
                     </ChartCard>
                 </section>
                 
-                <MindMap title="Areas to Focus On 🧐" nodes={problems} />
-                <MindMap title="Recommended Improvements 💡✨" nodes={solutions} />
+                <MindMap title="Key Focus Areas 🧐" nodes={problems} />
+                <MindMap title="Personalized Solutions 💡" nodes={solutions} />
 
-                <section className="bg-white p-4 sm:p-8 rounded-2xl shadow-lg border border-gray-100 mt-12">
-                    <h2 className="text-4xl md:text-5xl font-bold mb-10 text-center">In-Depth Analysis 📜</h2>
-                    <div className="p-4 sm:p-6 space-y-16 text-gray-700 leading-relaxed bg-gray-50/50 rounded-xl">
+                <section className="bg-white p-4 sm:p-8 rounded-2xl shadow-xl shadow-rose-100/50 border border-rose-50/50 mt-12">
+                    <h2 className="text-3xl md:text-4xl font-bold mb-10 text-center text-slate-800">In-Depth Analysis 📜</h2>
+                    <div className="p-4 sm:p-6 space-y-12 text-slate-700 leading-relaxed bg-rose-50/30 rounded-xl">
                         <div>
-                            <h3 className="text-3xl md:text-4xl font-semibold mb-4 text-pink-500">Introduction 🌸</h3>
+                            <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-rose-500">Introduction 🌸</h3>
                             <p className="text-lg">
                                 <HighlightedText text={detailedAnalysis.introduction} keywords={keywords} />
                             </p>
                         </div>
                         <div>
-                            <h3 className="text-3xl md:text-4xl font-semibold mb-4 text-green-500">Your Strengths 💪✨</h3>
+                            <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-rose-500">Your Strengths 💪✨</h3>
                             <ul className="list-disc list-inside space-y-3 text-lg">
                                 {detailedAnalysis.strengths.map((item, index) => <li key={index}><HighlightedText text={item} keywords={keywords} /></li>)}
                             </ul>
                         </div>
                         <div>
-                            <h3 className="text-3xl md:text-4xl font-semibold mb-4 text-yellow-500">Areas for Enhancement 💛</h3>
+                            <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-rose-500">Areas for Enhancement 💛</h3>
                              <ul className="list-disc list-inside space-y-3 text-lg">
                                 {detailedAnalysis.weaknesses.map((item, index) => <li key={index}><HighlightedText text={item} keywords={keywords} /></li>)}
                             </ul>
                         </div>
                          <div>
-                            <h3 className="text-3xl md:text-4xl font-semibold mb-4 text-blue-500">Personalized Suggestions ✍️</h3>
+                            <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-rose-500">Personalized Suggestions ✍️</h3>
                             <p className="text-lg">
                                 <HighlightedText text={detailedAnalysis.suggestions} keywords={keywords} />
                             </p>
                         </div>
                         <div>
-                            <h3 className="text-3xl md:text-4xl font-semibold mb-4 text-purple-500">Final Thoughts 💎</h3>
+                            <h3 className="text-2xl md:text-3xl font-semibold mb-4 text-rose-500">Final Thoughts 💎</h3>
                             <p className="text-lg">
                                 <HighlightedText text={detailedAnalysis.conclusion} keywords={keywords} />
                             </p>

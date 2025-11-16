@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { ScatterChart, Scatter, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ZAxis } from 'recharts';
 import type { BeautyIndex } from '../../types';
@@ -25,7 +24,7 @@ const BeautyScatterPlot: React.FC<ChartProps> = ({ data }) => {
         <YAxis type="number" dataKey="y" name="Score" unit="" />
         <ZAxis dataKey="name" name="name" />
         <Tooltip cursor={{ strokeDasharray: '3 3' }} />
-        <Scatter name="Beauty Indexes" data={plotData} fill="#ff7300" />
+        <Scatter name="Beauty Indexes" data={plotData} fill="#fb7185" />
       </ScatterChart>
     </ResponsiveContainer>
   );

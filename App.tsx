@@ -1,4 +1,3 @@
-
 import React, { useState, useCallback } from 'react';
 import type { AppState, AnalysisResult } from './types';
 import FrontPage from './components/FrontPage';
@@ -58,7 +57,7 @@ const App: React.FC = () => {
     };
 
     return (
-        <div className="bg-white min-h-screen w-full font-sans text-gray-900 antialiased">
+        <div className="bg-[#FFFBF7] min-h-screen w-full font-sans text-slate-800 antialiased">
             {renderContent()}
         </div>
     );

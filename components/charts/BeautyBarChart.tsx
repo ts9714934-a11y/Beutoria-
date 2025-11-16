@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import type { BeautyIndex } from '../../types';
@@ -24,7 +23,7 @@ const BeautyBarChart: React.FC<ChartProps> = ({ data }) => {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Bar dataKey="score" fill="#8884d8" />
+        <Bar dataKey="score" fill="#fb7185" />
       </BarChart>
     </ResponsiveContainer>
   );

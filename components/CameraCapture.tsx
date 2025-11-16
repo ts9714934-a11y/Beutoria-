@@ -17,7 +17,6 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onBack }) => {
 
         const startCamera = async () => {
             try {
-                // Ensure no previous stream is lingering
                 if (streamRef.current) {
                     streamRef.current.getTracks().forEach(track => track.stop());
                 }
@@ -36,7 +35,6 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onBack }) => {
                         videoRef.current.srcObject = mediaStream;
                     }
                 } else {
-                    // if component unmounted while waiting for stream, clean up
                     mediaStream.getTracks().forEach(track => track.stop());
                 }
             } catch (err) {
@@ -56,7 +54,7 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onBack }) => {
                 streamRef.current = null;
             }
         };
-    }, []); // Empty dependency array ensures this runs only once on mount and unmount
+    }, []);
 
     const handleCapture = () => {
         if (isCameraReady && videoRef.current && canvasRef.current && streamRef.current) {
@@ -66,51 +64,50 @@ const CameraCapture: React.FC<CameraCaptureProps> = ({ onCapture, onBack }) => {
             canvas.height = video.videoHeight;
             const context = canvas.getContext('2d');
             if (context) {
-                // Flip the image horizontally for a mirror effect to match the preview
                 context.translate(canvas.width, 0);
                 context.scale(-1, 1);
                 context.drawImage(video, 0, 0, canvas.width, canvas.height);
                 const dataUri = canvas.toDataURL('image/jpeg');
                 onCapture(dataUri);
-                // The cleanup in useEffect will handle stopping the camera when the component unmounts
             }
         }
     };
     
     const handleBack = () => {
-        // This will trigger the component to unmount, and the useEffect cleanup will stop the camera.
         onBack();
     }
 
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-white">
+        <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-[#FFFBF7]">
+            <h2 className="text-3xl font-bold text-slate-800 mb-8">Ready for your close-up?</h2>
             <div className="w-full max-w-lg relative">
+                <div className="absolute inset-0 rounded-3xl shadow-2xl shadow-rose-200/50 border-4 border-white transform scale-105"></div>
                 <video 
                     ref={videoRef} 
                     autoPlay 
                     playsInline 
-                    muted // Muting is good practice for autoplay
+                    muted
                     onCanPlay={() => setIsCameraReady(true)}
-                    className="w-full rounded-2xl shadow-lg aspect-square object-cover transform -scale-x-100" // Mirror the video feed for intuitive selfie experience
+                    className="w-full rounded-2xl shadow-lg aspect-square object-cover transform -scale-x-100 relative z-10"
                 />
                 <canvas ref={canvasRef} className="hidden" />
                 {!isCameraReady && !error && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/50 rounded-2xl">
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/30 rounded-2xl z-20">
                         <p className="text-white text-lg animate-pulse">Starting camera...</p>
                     </div>
                 )}
-                {error && <p className="text-red-500 absolute bottom-20 left-1/2 -translate-x-1/2 bg-white/80 p-2 rounded">{error}</p>}
+                {error && <p className="text-red-500 absolute -bottom-16 left-1/2 -translate-x-1/2 bg-white/80 p-3 rounded-lg shadow-md">{error}</p>}
             </div>
-            <div className="mt-8 flex gap-4">
+            <div className="mt-12 flex gap-4">
                  <button 
                     onClick={handleBack}
-                    className="px-6 py-3 bg-gray-200 text-black font-semibold rounded-full shadow-lg hover:bg-gray-300 transition-all duration-300 transform hover:scale-105">
+                    className="px-8 py-3 bg-white text-slate-800 font-semibold rounded-full shadow-lg border border-slate-200 hover:bg-slate-100 transition-all duration-300 transform hover:scale-105">
                     Back
                 </button>
                 <button 
                     onClick={handleCapture} 
                     disabled={!isCameraReady}
-                    className="px-8 py-3 bg-pink-400 text-white font-semibold rounded-full shadow-lg hover:bg-pink-500 transition-all duration-300 transform hover:scale-105 disabled:bg-gray-400 disabled:cursor-not-allowed">
+                    className="px-8 py-3 bg-rose-500 text-white font-semibold rounded-full shadow-lg shadow-rose-500/30 hover:bg-rose-600 transition-all duration-300 transform hover:scale-105 disabled:bg-slate-400 disabled:shadow-none disabled:cursor-not-allowed">
                     {isCameraReady ? 'Capture Selfie' : 'Loading...'}
                 </button>
             </div>

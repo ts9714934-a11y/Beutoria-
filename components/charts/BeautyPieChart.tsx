@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 import type { BeautyIndex } from '../../types';
@@ -7,7 +6,7 @@ interface ChartProps {
   data: BeautyIndex[];
 }
 
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#AF19FF', '#FF1943', '#19D7FF', '#FFC300', '#DAF7A6', '#C70039'];
+const COLORS = ['#fb7185', '#60a5fa', '#facc15', '#4ade80', '#c084fc', '#2dd4bf', '#f97316', '#8b5cf6', '#d946ef', '#14b8a6'];
 
 const BeautyPieChart: React.FC<ChartProps> = ({ data }) => {
   return (

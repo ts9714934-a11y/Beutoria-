@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import type { BeautyIndex } from '../../types';
@@ -23,7 +22,7 @@ const BeautyAreaChart: React.FC<ChartProps> = ({ data }) => {
         <XAxis dataKey="name" tick={{ fontSize: 10 }} angle={-25} textAnchor="end" height={60} interval={0} />
         <YAxis />
         <Tooltip />
-        <Area type="monotone" dataKey="score" stroke="#82ca9d" fill="#82ca9d" />
+        <Area type="monotone" dataKey="score" stroke="#fb7185" fill="#fecdd3" />
       </AreaChart>
     </ResponsiveContainer>
   );
